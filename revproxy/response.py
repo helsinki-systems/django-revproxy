@@ -77,7 +77,7 @@ DEFAULT_AMT = 2**16
 # buffering, all events will pending instead of return in realtime.
 NO_BUFFERING_AMT = 1
 
-NO_BUFFERING_CONTENT_TYPES = set(['text/event-stream', ])
+NO_BUFFERING_CONTENT_TYPES = set(['text/event-stream', "application/octet-stream"])
 
 
 def get_streaming_amt(proxy_response):
