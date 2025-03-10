@@ -8,7 +8,8 @@ logger = logging.getLogger('revproxy.response')
 
 
 def get_django_response(
-    proxy_response, strict_cookies=False, streaming_amount=None
+    proxy_response, strict_cookies=False, streaming_amount=None,
+    min_streaming_length=None,
 ):
     """This method is used to create an appropriate response based on the
     Content-Length of the proxy_response. If the content is bigger than
@@ -35,7 +36,7 @@ def get_django_response(
 
     logger.debug('Content-Type: %s', content_type)
 
-    if should_stream(proxy_response):
+    if should_stream(proxy_response, min_streaming_length):
         if streaming_amount is None:
             amt = get_streaming_amt(proxy_response)
         else:

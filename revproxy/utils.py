@@ -62,7 +62,7 @@ def is_html_content_type(content_type):
     return False
 
 
-def should_stream(proxy_response):
+def should_stream(proxy_response, min_streaming_length=None):
     """Function to verify if the proxy_response must be converted into
     a stream.This will be done by checking the proxy_response content-length
     and verify if its length is bigger than one stipulated
@@ -82,7 +82,9 @@ def should_stream(proxy_response):
     except ValueError:
         content_length = 0
 
-    if not content_length or content_length > MIN_STREAMING_LENGTH:
+    min_streaming_length = (min_streaming_length if min_streaming_length is not
+                            None else MIN_STREAMING_LENGTH)
+    if not content_length or content_length > min_streaming_length:
         return True
 
     return False

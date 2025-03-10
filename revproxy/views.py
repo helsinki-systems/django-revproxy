@@ -251,9 +251,14 @@ class ProxyView(View):
         self._replace_host_on_redirect_location(request, proxy_response)
         self._set_content_type(request, proxy_response)
 
+        min_streaming = settings.REVPROXY.get(
+            "MIN_STREAMING_LENGTH",
+            None,
+        )
         response = get_django_response(proxy_response,
                                        strict_cookies=self.strict_cookies,
-                                       streaming_amount=self.streaming_amount)
+                                       streaming_amount=self.streaming_amount,
+                                       min_streaming_length=min_streaming)
 
         self.log.debug("RESPONSE RETURNED: %s", response)
         return response
